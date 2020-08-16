@@ -10,8 +10,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 const LoginScreen = (props) => {
   const [userInfo, setUserInfo] = React.useState({
-    email: 'oktayibis@gmail.com',
-    password: '123456',
+    email: '',
+    password: '',
   });
   const checkToken = async () => {
     let token = await AsyncStorage.getItem('user');
@@ -28,12 +28,14 @@ const LoginScreen = (props) => {
     <View style={styles.container}>
       <View style={styles.inputs}>
         <CustomInput
+          value={userInfo.email}
           placeholder="User Mail"
           onChangeText={(text) =>
             setUserInfo({...userInfo, email: text.toLowerCase()})
           }
         />
         <CustomInput
+          value={userInfo.password}
           placeholder="Password"
           secureTextEntry
           onChangeText={(text) => setUserInfo({...userInfo, password: text})}

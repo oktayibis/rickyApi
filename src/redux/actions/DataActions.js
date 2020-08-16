@@ -39,7 +39,10 @@ export const getOneChar = (params) => {
           Authorization: callToken,
         },
       })
-      .then((resp) => dispatch({type: GET_ONE_CHAR, payload: resp.data}))
+      .then((resp) => {
+        dispatch({type: GET_ONE_CHAR, payload: resp.data});
+        Alert.alert('Success', `Welcome ${params.name} our world`);
+      })
       .catch((err) => Alert.alert('Error', err.message));
   };
 };
@@ -48,32 +51,26 @@ export const addChar = (char, token) => {
   const callToken = 'Bearer '.concat(token);
 
   return (dispatch) => {
-    axios
-      .post(
-        ADD_URL,
-        {
-          char,
-        },
-        {
+    checkAllDataIsValid(char) &&
+      axios
+        .post(ADD_URL, char, {
           headers: {
             Authorization: callToken,
           },
-        },
-      )
-      .then((resp) => dispatch({type: ADD_CHAR, payload: resp.data}))
-      .catch((err) => Alert.alert('Error', err.message));
+        })
+        .then((resp) => dispatch({type: ADD_CHAR, payload: resp.data}))
+        .catch((err) => Alert.alert('Error', err.message));
   };
 };
 
 export const removeChar = (id, token) => {
   const callToken = 'Bearer '.concat(token);
+  console.log(callToken);
   return (dispatch) => {
     axios
       .post(
         REMOVE_URL,
-        {
-          id,
-        },
+        {id},
         {
           headers: {
             Authorization: callToken,
@@ -84,3 +81,13 @@ export const removeChar = (id, token) => {
       .catch((err) => Alert.alert('Error', err.message));
   };
 };
+
+function checkAllDataIsValid(params) {
+  for (const [key, value] of Object.entries(params)) {
+    if (!value) {
+      Alert.alert('Error', `Please enter ${key}`);
+      return false;
+    }
+  }
+  return true;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import {View, FlatList} from 'react-native';
 import CharacterComponent from '../components/CharacterComponent';
 import {connect} from 'react-redux';
-import {getAllData} from '../redux/actions';
+import {getAllData, removeChar} from '../redux/actions';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const HomeScreen = (props) => {
@@ -14,8 +14,12 @@ const HomeScreen = (props) => {
     let token = await AsyncStorage.getItem('user');
     props.getAllData(token);
   };
+
+  const handleDelete = (id) => {
+    props.removeChar(id, props.token);
+  };
   const renderItem = ({item}) => {
-    return <CharacterComponent item={item} />;
+    return <CharacterComponent handleDelete={handleDelete} item={item} />;
   };
   return (
     <View>
@@ -32,4 +36,4 @@ const mapStateToProps = ({dataResponse, authResponse}) => {
   const {token} = authResponse;
   return {list, token};
 };
-export default connect(mapStateToProps, {getAllData})(HomeScreen);
+export default connect(mapStateToProps, {getAllData, removeChar})(HomeScreen);

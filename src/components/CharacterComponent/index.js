@@ -1,28 +1,51 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import LinkBottom from '../LinkBotton';
-const Character = ({item}) => {
+import Swipeout from 'react-native-swipeout';
+
+const Character = ({item, handleDelete}) => {
+  console.log(item._id);
+  const swipeoutBtns = [
+    {
+      text: 'Delete',
+      type: 'delete',
+      onPress: () =>
+        Alert.alert('Are You Sure', 'Do you want to delete?', [
+          {
+            text: 'Yes',
+            onPress: () => handleDelete(item._id),
+          },
+          {
+            text: 'No',
+          },
+        ]),
+    },
+  ];
   return (
-    <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={{uri: item.image}}
-          resizeMode="contain"
-        />
+    <Swipeout autoClose close right={swipeoutBtns}>
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{uri: item.image}}
+            resizeMode="contain"
+          />
+        </View>
+        <View>
+          <Text style={styles.title}>{item.name}</Text>
+          <Text style={styles.status}>{item.status}</Text>
+          <Text style={styles.species}>{item.species}</Text>
+          <Text style={styles.gender}>{item.gender}</Text>
+        </View>
       </View>
-      <View>
-        <Text style={styles.title}>{item.name}</Text>
-        <Text style={styles.status}>{item.status}</Text>
-        <Text style={styles.species}>{item.species}</Text>
-        <Text style={styles.gender}>{item.gender}</Text>
-      </View>
-      <View style={styles.delete}>
-        <TouchableOpacity>
-          <Text>Delete</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </Swipeout>
   );
 };
 

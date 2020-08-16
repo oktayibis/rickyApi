@@ -31,7 +31,8 @@ export default (state = USER, action) => {
     case 'AUTH_TRUE':
       return {
         ...state,
-        isAuth: action.payload,
+        isAuth: action.payload.isAuth,
+        token: action.payload.token,
       };
     default:
       return state;

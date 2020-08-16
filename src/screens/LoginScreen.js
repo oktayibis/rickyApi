@@ -15,7 +15,7 @@ const LoginScreen = (props) => {
   });
   const checkToken = async () => {
     let token = await AsyncStorage.getItem('user');
-    token && props.makeTrue(true);
+    token && props.makeTrue({isAuth: true, token});
   };
   React.useEffect(() => {
     checkToken();

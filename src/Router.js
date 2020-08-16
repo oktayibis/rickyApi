@@ -28,7 +28,7 @@ const Router = (props) => {
                     <TouchableOpacity
                       onPress={() => {
                         AsyncStorage.removeItem('user');
-                        props.makeTrue(false);
+                        props.makeTrue({isAuth: false, token: ''});
                       }}
                       style={{
                         marginLeft: 15,

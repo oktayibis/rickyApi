@@ -4,7 +4,7 @@ import {StyleSheet, TextInput, View} from 'react-native';
 const CustomInput = (props) => {
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} {...props}  />
+      <TextInput style={styles.input} {...props} />
     </View>
   );
 };

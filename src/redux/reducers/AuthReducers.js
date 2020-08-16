@@ -22,7 +22,6 @@ export default (state = USER, action) => {
         };
       }
     case LOGIN_USER:
-
       AsyncStorage.setItem('user', action.payload.token);
       return {
         ...state,

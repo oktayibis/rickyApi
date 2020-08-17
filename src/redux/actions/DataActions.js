@@ -74,7 +74,6 @@ export const addChar = (char, token) => {
 
 export const removeChar = (id, token) => {
   const callToken = 'Bearer '.concat(token);
-  console.log(callToken);
   return (dispatch) => {
     dispatch({type: LOADING_START});
     axios

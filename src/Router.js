@@ -12,7 +12,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {changeStatus} from './redux/actions/AuthActions';
 const Router = (props) => {
   const Stack = createStackNavigator();
-  console.log('-----------------', props.isAuth);
   return (
     <NavigationContainer>
       <Stack.Navigator>

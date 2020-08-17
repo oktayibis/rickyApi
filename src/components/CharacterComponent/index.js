@@ -11,7 +11,6 @@ import LinkBottom from '../LinkBotton';
 import Swipeout from 'react-native-swipeout';
 
 const Character = ({item, handleDelete}) => {
-  console.log(item._id);
   const swipeoutBtns = [
     {
       text: 'Delete',

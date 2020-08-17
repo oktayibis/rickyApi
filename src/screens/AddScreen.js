@@ -23,7 +23,6 @@ const AddScreen = (props) => {
   });
 
   const [imageUploading, setImageUploading] = React.useState(false);
-  console.log(char.image);
   return (
     <View style={styles.container}>
       <CustomInput
@@ -61,7 +60,6 @@ const AddScreen = (props) => {
             };
 
             ImagePicker.showImagePicker(options, (response) => {
-              console.log('REsp ====', response);
               if (response.error) {
                 return Alert.alert('Uploading Failed', response.error);
               }

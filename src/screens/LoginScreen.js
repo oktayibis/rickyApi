@@ -41,7 +41,11 @@ const LoginScreen = (props) => {
         />
       </View>
       <View style={styles.btns}>
-        <LoginButton title="Login" onPress={() => handleLogin(userInfo)} />
+        <LoginButton
+          title="Login"
+          onPress={() => handleLogin(userInfo)}
+          loading={props.loading}
+        />
         <LinkBotton
           title="Register"
           onPress={() => props.navigation.push('RegisterScreen')}
@@ -51,8 +55,8 @@ const LoginScreen = (props) => {
   );
 };
 const mapStateToProps = ({authResponse}) => {
-  const {isAuth} = authResponse;
-  return {isAuth};
+  const {isAuth, loading} = authResponse;
+  return {isAuth, loading};
 };
 export default connect(mapStateToProps, {getLogin, changeStatus})(LoginScreen);
 

@@ -7,6 +7,10 @@ export const GET_ONE_URL = `${BASE_URL}/api/characterById`;
 export const REGISTER_URL = `${BASE_URL}/register`;
 export const LOGIN_URL = `${BASE_URL}/login`;
 
+//Loading
+export const LOADING_START = 'loading_start';
+export const LOADING_FINISH = 'loading_finish';
+
 // Add Char
 export const ADD_CHAR = 'add_item';
 
@@ -19,13 +23,9 @@ export const REGISTER_USER = 'register_user';
 // Get chars
 export const GET_CHARS = 'get_chars';
 export const GET_ONE_CHAR = 'get_one_char';
-export const GET_CHARS_SUCCESS = 'get_chars_success';
-export const GET_CHARS_FAILED = 'get_chars_failed';
 
 // login
 export const LOGIN_USER = 'login_start';
-export const LOGIN_USER_SUCCESS = 'login_success';
-export const LOGIN_USER_FAILED = 'login_failed';
 
 // Locals
 

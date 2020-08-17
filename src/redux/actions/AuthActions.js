@@ -6,17 +6,24 @@ import {
   REGISTER_URL,
   REGISTER_USER,
   LOGIN_USER,
+  LOADING_START,
+  LOADING_FINISH,
 } from './type';
 export const getLogin = (params) => {
   return (dispatch) => {
     if ((params.email !== '', params.password !== '')) {
       if (validateEmail(params.email)) {
+        dispatch({type: LOADING_START});
         axios
           .post(LOGIN_URL, params)
           .then((resp) => {
             dispatch({type: LOGIN_USER, payload: resp.data});
+            dispatch({type: LOADING_FINISH});
           })
-          .catch((error) => Alert.alert('Error', error.message));
+          .catch((error) => {
+            Alert.alert('Error', error.message);
+            dispatch({type: LOADING_FINISH});
+          });
       } else {
         Alert.alert('Error', 'E-mail is not valid');
       }
@@ -28,14 +35,18 @@ export const getLogin = (params) => {
 
 export const registerUser = (params) => {
   return (dispatch) => {
-    checkAllDataIsValid(params) &&
-      axios
-        .post(REGISTER_URL, params)
-        .then((resp) => {
-          Alert.alert('Thanks a lot!', 'You registered successfully');
-          dispatch({type: REGISTER_USER, payload: resp.data});
-        })
-        .catch((err) => Alert.alert('Error', err.message));
+    checkAllDataIsValid(params) && dispatch({type: LOADING_START});
+    axios
+      .post(REGISTER_URL, params)
+      .then((resp) => {
+        Alert.alert('Thanks a lot!', 'You registered successfully');
+        dispatch({type: REGISTER_USER, payload: resp.data});
+        dispatch({type: LOADING_FINISH});
+      })
+      .catch((err) => {
+        Alert.alert('Error', err.message);
+        dispatch({type: LOADING_FINISH});
+      });
   };
 };
 

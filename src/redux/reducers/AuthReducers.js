@@ -1,9 +1,16 @@
-import {REGISTER_USER, LOGIN_USER, CHANGE_AUTH_STATUS} from '../actions/type';
+import {
+  REGISTER_USER,
+  LOGIN_USER,
+  CHANGE_AUTH_STATUS,
+  LOADING_START,
+  LOADING_FINISH,
+} from '../actions/type';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const USER = {
   token: null,
   isAuth: false,
+  loading: false,
 };
 
 export default (state = USER, action) => {
@@ -33,6 +40,16 @@ export default (state = USER, action) => {
         ...state,
         isAuth: action.payload.isAuth,
         token: action.payload.token,
+      };
+    case LOADING_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LOADING_FINISH:
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;

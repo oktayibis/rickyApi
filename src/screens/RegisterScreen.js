@@ -39,6 +39,7 @@ const RegisterScreen = (props) => {
 
       <View style={styles.buttons}>
         <LoginButton
+          loading={props.loading}
           title="Register"
           onPress={() => props.registerUser(user)}
         />
@@ -48,8 +49,8 @@ const RegisterScreen = (props) => {
   );
 };
 const mapStateToProps = ({authResponse}) => {
-  const {isAuth} = authResponse;
-  return {isAuth};
+  const {isAuth, loading} = authResponse;
+  return {isAuth, loading};
 };
 export default connect(mapStateToProps, {registerUser})(RegisterScreen);
 

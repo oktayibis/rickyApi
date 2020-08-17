@@ -1,4 +1,4 @@
-import {REGISTER_USER, LOGIN_USER} from '../actions/type';
+import {REGISTER_USER, LOGIN_USER, CHANGE_AUTH_STATUS} from '../actions/type';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const USER = {
@@ -28,7 +28,7 @@ export default (state = USER, action) => {
         token: action.payload.token,
         isAuth: true,
       };
-    case 'AUTH_TRUE':
+    case CHANGE_AUTH_STATUS:
       return {
         ...state,
         isAuth: action.payload.isAuth,

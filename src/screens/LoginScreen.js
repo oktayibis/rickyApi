@@ -1,8 +1,7 @@
 import React from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
-import * as RootNavigation from '../RootNavigation';
+import {View, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
-import {getLogin, makeTrue} from '../redux/actions/AuthActions';
+import {getLogin, changeStatus} from '../redux/actions/AuthActions';
 import LoginButton from '../components/LoginButton';
 import LinkBotton from '../components/LinkBotton';
 import CustomInput from '../components/CustomInput';
@@ -15,7 +14,7 @@ const LoginScreen = (props) => {
   });
   const checkToken = async () => {
     let token = await AsyncStorage.getItem('user');
-    token && props.makeTrue({isAuth: true, token});
+    token && props.changeStatus({isAuth: true, token});
   };
   React.useEffect(() => {
     checkToken();
@@ -55,7 +54,7 @@ const mapStateToProps = ({authResponse}) => {
   const {isAuth} = authResponse;
   return {isAuth};
 };
-export default connect(mapStateToProps, {getLogin, makeTrue})(LoginScreen);
+export default connect(mapStateToProps, {getLogin, changeStatus})(LoginScreen);
 
 const styles = StyleSheet.create({
   container: {

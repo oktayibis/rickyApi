@@ -2,7 +2,7 @@ import {Alert} from 'react-native';
 import axios from 'axios';
 import {
   LOGIN_URL,
-  GET_CHARS,
+  CHANGE_AUTH_STATUS,
   REGISTER_URL,
   REGISTER_USER,
   LOGIN_USER,
@@ -39,9 +39,9 @@ export const registerUser = (params) => {
   };
 };
 
-export const makeTrue = (status) => {
+export const changeStatus = (status) => {
   return (dispatch) => {
-    dispatch({type: 'AUTH_TRUE', payload: status});
+    dispatch({type: CHANGE_AUTH_STATUS, payload: status});
   };
 };
 

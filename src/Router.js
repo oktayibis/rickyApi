@@ -9,7 +9,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import {makeTrue} from './redux/actions/AuthActions';
+import {changeStatus} from './redux/actions/AuthActions';
 const Router = (props) => {
   const Stack = createStackNavigator();
   console.log('-----------------', props.isAuth);
@@ -28,7 +28,7 @@ const Router = (props) => {
                     <TouchableOpacity
                       onPress={() => {
                         AsyncStorage.removeItem('user');
-                        props.makeTrue({isAuth: false, token: ''});
+                        props.changeStatus({isAuth: false, token: ''});
                       }}
                       style={{
                         marginLeft: 15,
@@ -96,4 +96,4 @@ const mapStateToProps = ({authResponse}) => {
   const {isAuth} = authResponse;
   return {isAuth};
 };
-export default connect(mapStateToProps, {makeTrue})(Router);
+export default connect(mapStateToProps, {changeStatus})(Router);

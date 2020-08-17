@@ -26,3 +26,7 @@ export const GET_CHARS_FAILED = 'get_chars_failed';
 export const LOGIN_USER = 'login_start';
 export const LOGIN_USER_SUCCESS = 'login_success';
 export const LOGIN_USER_FAILED = 'login_failed';
+
+// Locals
+
+export const CHANGE_AUTH_STATUS = 'change_auth_status';

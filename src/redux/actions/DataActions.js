@@ -10,6 +10,8 @@ import {
   ADD_CHAR,
   REMOVE_URL,
   REMOVE_CHAR,
+  LOADING_START,
+  LOADING_FINISH,
 } from './type';
 import {Alert} from 'react-native';
 
@@ -30,6 +32,7 @@ export const getAllData = (params) => {
 export const getOneChar = (params) => {
   const callToken = 'Bearer '.concat(params.token);
   return (dispatch) => {
+    dispatch({type: LOADING_START});
     axios
       .get(GET_ONE_URL, {
         params: {
@@ -43,7 +46,8 @@ export const getOneChar = (params) => {
         dispatch({type: GET_ONE_CHAR, payload: resp.data});
         Alert.alert('Success', `Welcome ${params.name} our world`);
       })
-      .catch((err) => Alert.alert('Error', err.message));
+      .catch((err) => Alert.alert('Error', err.message))
+      .finally(() => dispatch({type: LOADING_FINISH}));
   };
 };
 
@@ -51,15 +55,20 @@ export const addChar = (char, token) => {
   const callToken = 'Bearer '.concat(token);
 
   return (dispatch) => {
-    checkAllDataIsValid(char) &&
-      axios
-        .post(ADD_URL, char, {
-          headers: {
-            Authorization: callToken,
-          },
-        })
-        .then((resp) => dispatch({type: ADD_CHAR, payload: resp.data}))
-        .catch((err) => Alert.alert('Error', err.message));
+    checkAllDataIsValid(char) && dispatch({type: LOADING_START});
+    axios
+      .post(ADD_URL, char, {
+        headers: {
+          Authorization: callToken,
+        },
+      })
+      .then((resp) => {
+        dispatch({type: ADD_CHAR, payload: resp.data});
+      })
+      .catch((err) => {
+        Alert.alert('Error', err.message);
+      })
+      .finally(() => dispatch({type: LOADING_FINISH}));
   };
 };
 
@@ -67,6 +76,7 @@ export const removeChar = (id, token) => {
   const callToken = 'Bearer '.concat(token);
   console.log(callToken);
   return (dispatch) => {
+    dispatch({type: LOADING_START});
     axios
       .post(
         REMOVE_URL,
@@ -77,8 +87,11 @@ export const removeChar = (id, token) => {
           },
         },
       )
-      .then((resp) => dispatch({type: REMOVE_CHAR, payload: id}))
-      .catch((err) => Alert.alert('Error', err.message));
+      .then((resp) => {
+        dispatch({type: REMOVE_CHAR, payload: id});
+      })
+      .catch((err) => Alert.alert('Error', err.message))
+      .finally(() => dispatch({type: LOADING_FINISH}));
   };
 };
 

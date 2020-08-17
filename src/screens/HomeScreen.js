@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, ActivityIndicator} from 'react-native';
 import CharacterComponent from '../components/CharacterComponent';
 import {connect} from 'react-redux';
 import {getAllData, removeChar} from '../redux/actions';
@@ -22,18 +22,22 @@ const HomeScreen = (props) => {
     return <CharacterComponent handleDelete={handleDelete} item={item} />;
   };
   return (
-    <View>
-      <FlatList
-        data={props.list}
-        renderItem={renderItem}
-        keyExtractor={(item) => item._id.toString()}
-      />
+    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      {props.loading ? (
+        <ActivityIndicator size="large" color="blue" />
+      ) : (
+        <FlatList
+          data={props.list}
+          renderItem={renderItem}
+          keyExtractor={(item) => item._id.toString()}
+        />
+      )}
     </View>
   );
 };
 const mapStateToProps = ({dataResponse, authResponse}) => {
-  const {list} = dataResponse;
+  const {list, loading} = dataResponse;
   const {token} = authResponse;
-  return {list, token};
+  return {list, token, loading};
 };
 export default connect(mapStateToProps, {getAllData, removeChar})(HomeScreen);

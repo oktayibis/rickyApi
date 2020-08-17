@@ -1,4 +1,10 @@
-import {GET_CHARS, ADD_CHAR, REMOVE_CHAR} from '../actions/type';
+import {
+  GET_CHARS,
+  ADD_CHAR,
+  REMOVE_CHAR,
+  LOADING_START,
+  LOADING_FINISH,
+} from '../actions/type';
 
 const DATA = {
   list: [],
@@ -22,6 +28,16 @@ export default (state = DATA, action) => {
       return {
         ...state,
         list: newList,
+      };
+    case LOADING_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LOADING_FINISH:
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;

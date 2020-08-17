@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  ActivityIndicator,
+  Image,
+} from 'react-native';
 import CustomInput from '../components/CustomInput';
 import LinkButton from '../components/LinkBotton';
 import {TouchableOpacity} from 'react-native';
@@ -14,7 +21,9 @@ const AddScreen = (props) => {
     gender: '',
     image: '',
   });
-  console.log(char);
+
+  const [imageUploading, setImageUploading] = React.useState(false);
+  console.log(char.image);
   return (
     <View style={styles.container}>
       <CustomInput
@@ -33,11 +42,16 @@ const AddScreen = (props) => {
         placeholder="Gender"
         onChangeText={(text) => setChar({...char, gender: text})}
       />
-
+      <Image
+        defaultSource={require('../../asset/dummy.jpg')}
+        style={{width: 150, height: 150, alignSelf: 'center', borderRadius: 10}}
+        source={{uri: char.image ? char.image : null}}
+      />
       <View>
         <TouchableOpacity
           style={styles.addImageContainer}
           onPress={() => {
+            setImageUploading(true);
             const options = {
               title: 'Select Image',
               storageOptions: {
@@ -52,13 +66,18 @@ const AddScreen = (props) => {
                 return Alert.alert('Uploading Failed', response.error);
               }
               setChar({...char, image: response.uri});
+              setImageUploading(false);
+              Alert.alert('Image Added');
             });
           }}>
-          <Text style={styles.label}>Add Image</Text>
+          <Text style={styles.label}>
+            {imageUploading ? <ActivityIndicator /> : 'Add Image'}
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.addBtn}>
         <LinkButton
+          loading={props.loading}
           title="Add Character"
           onPress={() => {
             props.addChar(char, props.token);
@@ -70,15 +89,16 @@ const AddScreen = (props) => {
             ]);
           }}
         />
+        {props.loading && <ActivityIndicator size="large" color="blue" />}
       </View>
     </View>
   );
 };
 
 const mapStateToProps = ({dataResponse, authResponse}) => {
-  console.log(authResponse);
+  let {loading} = dataResponse;
   let {token} = authResponse;
-  return {token};
+  return {token, loading};
 };
 export default connect(mapStateToProps, {addChar})(AddScreen);
 
